@@ -1,0 +1,45 @@
+{
+    "cluster" : [
+        {  
+            "id": "cluster1",
+            "parameters" : {
+                "domain": "sm-domain.com",
+                "subnet_mask": "255.255.255.0",
+                "gateway": "192.168.1.1",
+                "provision": {
+                    "containers": {
+                        "inventory": {
+                            "[all:vars]": {
+                                "keystone_config": {
+                                    "ip": "192.168.10.21",
+                                    "admin_password": "contrail123",
+                                    "admin_tenant": "admin"
+                                },
+                                "global_config": {
+                                    "external_rabbitmq_servers": "['192.168.10.21']"
+                                }
+                            }
+                        }
+                    },
+                    "contrail": {
+                        "kernel_upgrade": false,
+                        "database": {
+                            "minimum_diskGB": 32
+                        },
+                        "config": {
+                            "config_ip_list": ["192.168.10.21"],
+                            "manage_neutron": false
+                        }
+                    },
+                    "openstack":{
+                        "openstack_manage_amqp": true,
+                        "keystone" : {
+                            "admin_password": "contrail123",
+                            "admin_token": "contrail123"
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

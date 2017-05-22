@@ -1,0 +1,35 @@
+{
+    "image": [
+        {   
+            "category": "package",
+            "id": "contrail_4_0_0_3049",
+            "path": "/sm-shared-folder/bin/contrail-install-packages.tgz",
+            "type": "contrail-ubuntu-package",
+            "version": "4.0.0-3049",
+            "parameters": { 
+               "containers": [  
+                   {        
+                       "role": "contrail-controller",
+                       "container_path": "/sm-shared-folder/bin/contrail-controller-u14.04-4.0.0.0-3049.tar.gz"
+                   },       
+                   {        
+                       "role": "contrail-agent",
+                       "container_path": "/sm-shared-folder/bin/contrail-agent-u14.04-4.0.0.0-3049.tar.gz"    
+                   },       
+                   {            
+                       "role": "contrail-lb",
+                       "container_path": "/sm-shared-folder/bin/contrail-lb-u14.04-4.0.0.0-3049.tar.gz"
+                   },          
+                   {        
+                       "role": "contrail-analytics",
+                       "container_path": "/sm-shared-folder/bin/contrail-analytics-u14.04-4.0.0.0-3049.tar.gz"
+                   },               
+                   {                
+                       "role": "contrail-analyticsdb",
+                       "container_path": "/sm-shared-folder/bin/contrail-analyticsdb-u14.04-4.0.0.0-3049.tar.gz"
+                   }
+               ]                
+            }                       
+        }
+    ]
+}

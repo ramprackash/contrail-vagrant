@@ -1,0 +1,52 @@
+{
+    "server": [
+        {
+            "cluster_id": "cluster1",
+            "domain": "sm-domain.com",
+            "id": "server1",
+            "parameters" : {
+                "partition": "/dev/vda",
+                "provision": {
+                    "contrail": {
+                        "compute": {
+                            "dpdk": {
+                                "core_mask": "",
+                                "huge_pages": ""
+                            }
+                        }
+                    }
+                }
+            },
+            "contrail": {
+                "control_data_interface": "eth2"
+            },
+            "network" : {
+                "interfaces": [
+                    {
+                        "name": "eth1",
+                        "dhcp": false,
+                        "mac_address": "52:54:00:00:01:21",
+                        "ip_address": "192.168.1.21/24",
+                        "default_gateway": "192.168.1.1"
+                    },
+                    {
+                        "name": "eth2",
+                        "mac_address": "52:54:00:00:10:21",
+                        "ip_address": "192.168.10.21/24",
+                        "default_gateway": "192.168.10.1"
+                    }
+                ],
+                "management_interface": "eth1",
+                "provisioning": "kickstart"
+            },
+            "password": "c0ntrail123",
+            "ipmi_address": "",
+            "roles": [
+                     "contrail-controller",
+                     "contrail-analytics",
+                     "contrail-analyticsdb",
+                     "openstack",
+                     "contrail-compute" ]
+        }
+    ]
+}

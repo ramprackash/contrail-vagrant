@@ -1,0 +1,28 @@
+{
+    "cluster" : [
+        {  
+            "id": "cluster1",
+            "parameters" : {
+                "domain": "sm-domain.com",
+                "subnet_mask": "255.255.255.0",
+                "gateway": "192.168.1.1",
+                "provision": {
+                    "contrail": {
+                        "ha": {
+                            "contrail_internal_vip": "192.168.1.24",
+                            "contrail_external_vip": "192.168.1.24"
+                        }
+                    },
+                    "contrail_4": {
+                        "controller_config": {
+                            "bgp_asn": 64520
+                        }
+                    },
+                    "openstack":{
+                        "openstack_manage_amqp": false
+                    }
+                }
+            }
+        }
+    ]
+}

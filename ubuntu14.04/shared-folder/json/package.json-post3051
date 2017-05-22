@@ -1,0 +1,14 @@
+{
+    "image": [
+        {   
+            "category": "package",
+            "id": "contrail_4_0_0_3051",
+            "path": "/sm-shared-folder/bin/contrail-cloud-docker_4.0.0.0-3051-mitaka.tgz",
+            "type": "contrail-ubuntu-package",
+            "version": "4.0.0-3051",
+            "parameters": { 
+                "contrail-container-package": true
+            }                       
+        }
+    ]
+}

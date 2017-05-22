@@ -1,0 +1,15 @@
+{
+    "image": [
+        {
+            "category": "image", 
+            "id": "ubuntu-16", 
+            "parameters": {
+                "kickseed": "/sm-shared-folder/bin/contrail-ubuntu_xenial.seed", 
+                "kickstart": "/sm-shared-folder/bin/contrail-ubuntu_xenial.ks"
+            }, 
+            "path": "/sm-shared-folder/bin/ubuntu-16.04.2-server-amd64.iso", 
+            "type": "ubuntu", 
+            "version": "16.04.2"
+        }
+    ]
+}

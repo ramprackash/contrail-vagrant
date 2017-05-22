@@ -1,0 +1,29 @@
+{
+    "cluster" : [
+        {  
+            "id": "kube_cluster",
+            "parameters" : {
+                "domain": "sm-domain.com",
+                "subnet_mask": "255.255.255.0",
+                "gateway": "192.168.1.1",
+                "provision": {
+                    "contrail": {
+                        "ha": {
+                            "contrail_internal_vip": "192.168.1.24",
+                            "contrail_external_vip": "192.168.1.24"
+                        }
+                    },
+                    "openstack":{
+                        "openstack_manage_amqp": true,
+                        "ha": {
+                            "internal_vip": "192.168.10.100",
+                            "external_vip": "192.168.1.100",
+                            "internal_virtual_router_id": 102,
+                            "external_virtual_router_id": 101
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

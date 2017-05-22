@@ -1,0 +1,57 @@
+{
+    "cluster" : [
+        {  
+            "id": "cluster1",
+            "parameters" : {
+                "domain": "sm-domain.com",
+                "subnet_mask": "255.255.255.0",
+                "gateway": "192.168.1.1",
+                "provision": {
+                    "containers": {
+                        "inventory": {
+                            "[all:vars]": {
+                                "config_ip": "192.168.1.24",
+                                "controller_ip": "192.168.1.24",
+                                "analytics_ip": "192.168.1.24",
+                                "keystone_config": {
+                                    "ip": "192.168.10.100",
+                                    "admin_password": "contrail123",
+                                    "admin_tenant": "admin"
+                                },
+                                "global_config": {
+                                    "external_rabbitmq_servers": "['192.168.10.25', '192.168.10.26', '192.168.10.27']"
+                                }
+                            }
+                        }
+                    },
+                    "contrail": {
+                        "kernel_upgrade": false,
+                        "database": {
+                            "minimum_diskGB": 32
+                        },
+                        "config": {
+                            "config_ip_list": ["192.168.10.21", "192.168.10.22", "192.168.10.23"],
+                            "manage_neutron": false
+                        },
+                        "ha": {
+                            "contrail_internal_vip": "192.168.1.24",
+                            "contrail_external_vip": "192.168.1.24"
+                        }
+                    },
+                    "openstack":{
+                        "openstack_manage_amqp": true,
+                        "keystone" : {
+                            "admin_password": "contrail123"
+                        },
+                        "ha": {
+                            "internal_vip": "192.168.10.100",
+                            "external_vip": "192.168.1.100",
+                            "internal_virtual_router_id": 102,
+                            "external_virtual_router_id": 101
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

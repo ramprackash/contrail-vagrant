@@ -1,0 +1,316 @@
+{
+    "server": [
+        {
+            "cluster_id": "cluster7",
+            "domain": "sm-domain.com",
+            "id": "server1",
+            "parameters" : {
+                "partition": "/dev/vda",
+                "provision": {
+                    "contrail": {
+                        "compute": {
+                            "dpdk": {
+                                "core_mask": "",
+                                "huge_pages": ""
+                            }
+                        }
+                    }
+                }
+            },
+            "contrail": {
+                "control_data_interface": "eth2"
+            },
+            "network" : {
+                "interfaces": [
+                    {
+                        "name": "eth1",
+                        "dhcp": false,
+                        "mac_address": "52:54:00:00:01:21",
+                        "ip_address": "192.168.1.21/24",
+                        "default_gateway": "192.168.1.1"
+                    },
+                    {
+                        "name": "eth2",
+                        "mac_address": "52:54:00:00:10:21",
+                        "ip_address": "192.168.10.21/24",
+                        "default_gateway": "192.168.10.1"
+                    }
+                ],
+                "management_interface": "eth1",
+                "provisioning": "kickstart"
+            },
+            "password": "c0ntrail123",
+            "ipmi_address": "",
+            "roles": [
+                     "contrail-controller", "contrail-analytics", "contrail-analyticsdb"
+                     ]
+        },
+        {
+            "cluster_id": "cluster7",
+            "domain": "sm-domain.com",
+            "id": "server2",
+            "parameters" : {
+                "partition": "/dev/vda",
+                "provision": {
+                    "contrail": {
+                        "compute": {
+                            "dpdk": {
+                                "core_mask": "",
+                                "huge_pages": ""
+                            }
+                        }
+                    }
+                }
+            },
+            "contrail": {
+                "control_data_interface": "eth2"
+            },
+            "network" : {
+                "interfaces": [
+                    {
+                        "name": "eth1",
+                        "dhcp": false,
+                        "mac_address": "52:54:00:00:01:22",
+                        "ip_address": "192.168.1.22/24",
+                        "default_gateway": "192.168.1.1"
+                    },
+                    {
+                        "name": "eth2",
+                        "mac_address": "52:54:00:00:10:22",
+                        "ip_address": "192.168.10.22/24",
+                        "default_gateway": "192.168.10.1"
+                    }
+                ],
+                "management_interface": "eth1",
+                "provisioning": "kickstart"
+            },
+            "password": "c0ntrail123",
+            "ipmi_address": "",
+            "roles": [
+                     "contrail-controller", "contrail-analytics", "contrail-analyticsdb"
+                     ]
+        },
+        {
+            "cluster_id": "cluster7",
+            "domain": "sm-domain.com",
+            "id": "server3",
+            "parameters" : {
+                "partition": "/dev/vda",
+                "provision": {
+                    "contrail": {
+                        "compute": {
+                            "dpdk": {
+                                "core_mask": "",
+                                "huge_pages": ""
+                            }
+                        }
+                    }
+                }
+            },
+            "contrail": {
+                "control_data_interface": "eth2"
+            },
+            "network" : {
+                "interfaces": [
+                    {
+                        "name": "eth1",
+                        "dhcp": false,
+                        "mac_address": "52:54:00:00:01:23",
+                        "ip_address": "192.168.1.23/24",
+                        "default_gateway": "192.168.1.1"
+                    },
+                    {
+                        "name": "eth2",
+                        "mac_address": "52:54:00:00:10:23",
+                        "ip_address": "192.168.10.23/24",
+                        "default_gateway": "192.168.10.1"
+                    }
+                ],
+                "management_interface": "eth1",
+                "provisioning": "kickstart"
+            },
+            "password": "c0ntrail123",
+            "ipmi_address": "",
+            "roles": [
+                     "contrail-controller", "contrail-analytics", "contrail-analyticsdb"
+                     ]
+        },
+        {
+            "cluster_id": "cluster7",
+            "domain": "sm-domain.com",
+            "id": "server4",
+            "parameters" : {
+                "partition": "/dev/vda",
+                "provision": {
+                    "contrail": {
+                        "compute": {
+                            "dpdk": {
+                                "core_mask": "",
+                                "huge_pages": ""
+                            }
+                        }
+                    }
+                }
+            },
+            "contrail": {
+                "control_data_interface": "eth2"
+            },
+            "network" : {
+                "interfaces": [
+                    {
+                        "name": "eth1",
+                        "dhcp": false,
+                        "mac_address": "52:54:00:00:01:24",
+                        "ip_address": "192.168.1.24/24",
+                        "default_gateway": "192.168.1.1"
+                    },
+                    {
+                        "name": "eth2",
+                        "mac_address": "52:54:00:00:10:24",
+                        "ip_address": "192.168.10.24/24",
+                        "default_gateway": "192.168.10.1"
+                    }
+                ],
+                "management_interface": "eth1",
+                "provisioning": "kickstart"
+            },
+            "password": "c0ntrail123",
+            "ipmi_address": "",
+            "roles": [
+                     "contrail-lb"
+                     ]
+        },
+        {
+            "cluster_id": "cluster7",
+            "domain": "sm-domain.com",
+            "id": "server5",
+            "parameters" : {
+                "partition": "/dev/vda",
+                "provision": {
+                    "contrail": {
+                        "compute": {
+                            "dpdk": {
+                                "core_mask": "",
+                                "huge_pages": ""
+                            }
+                        }
+                    }
+                }
+            },
+            "contrail": {
+                "control_data_interface": "eth2"
+            },
+            "network" : {
+                "interfaces": [
+                    {
+                        "name": "eth1",
+                        "dhcp": false,
+                        "mac_address": "52:54:00:00:01:25",
+                        "ip_address": "192.168.1.25/24",
+                        "default_gateway": "192.168.1.1"
+                    },
+                    {
+                        "name": "eth2",
+                        "mac_address": "52:54:00:00:10:25",
+                        "ip_address": "192.168.10.25/24",
+                        "default_gateway": "192.168.10.1"
+                    }
+                ],
+                "management_interface": "eth1",
+                "provisioning": "kickstart"
+            },
+            "password": "c0ntrail123",
+            "ipmi_address": "",
+            "roles": [
+                     "openstack" ]
+        },
+        {
+            "cluster_id": "cluster7",
+            "domain": "sm-domain.com",
+            "id": "server6",
+            "parameters" : {
+                "partition": "/dev/vda",
+                "provision": {
+                    "contrail": {
+                        "compute": {
+                            "dpdk": {
+                                "core_mask": "",
+                                "huge_pages": ""
+                            }
+                        }
+                    }
+                }
+            },
+            "contrail": {
+                "control_data_interface": "eth2"
+            },
+            "network" : {
+                "interfaces": [
+                    {
+                        "name": "eth1",
+                        "dhcp": false,
+                        "mac_address": "52:54:00:00:01:26",
+                        "ip_address": "192.168.1.26/24",
+                        "default_gateway": "192.168.1.1"
+                    },
+                    {
+                        "name": "eth2",
+                        "mac_address": "52:54:00:00:10:26",
+                        "ip_address": "192.168.10.26/24",
+                        "default_gateway": "192.168.10.1"
+                    }
+                ],
+                "management_interface": "eth1",
+                "provisioning": "kickstart"
+            },
+            "password": "c0ntrail123",
+            "ipmi_address": "",
+            "roles": [
+                     "contrail-compute" ]
+        },
+        {
+            "cluster_id": "cluster7",
+            "domain": "sm-domain.com",
+            "id": "server7",
+            "parameters" : {
+                "partition": "/dev/vda",
+                "provision": {
+                    "contrail": {
+                        "compute": {
+                            "dpdk": {
+                                "core_mask": "",
+                                "huge_pages": ""
+                            }
+                        }
+                    }
+                }
+            },
+            "contrail": {
+                "control_data_interface": "eth2"
+            },
+            "network" : {
+                "interfaces": [
+                    {
+                        "name": "eth1",
+                        "dhcp": false,
+                        "mac_address": "52:54:00:00:01:27",
+                        "ip_address": "192.168.1.27/24",
+                        "default_gateway": "192.168.1.1"
+                    },
+                    {
+                        "name": "eth2",
+                        "mac_address": "52:54:00:00:10:27",
+                        "ip_address": "192.168.10.27/24",
+                        "default_gateway": "192.168.10.1"
+                    }
+                ],
+                "management_interface": "eth1",
+                "provisioning": "kickstart"
+            },
+            "password": "c0ntrail123",
+            "ipmi_address": "",
+            "roles": [
+                     "contrail-compute" ]
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+{
+    "image": [
+        {
+            "category": "image", 
+            "id": "ubuntu-14.04.05", 
+            "parameters": {
+                "kickseed": "/sm-shared-folder/bin/ubuntu-14.04.5.seed", 
+                "kickstart": "/sm-shared-folder/bin/ubuntu-14.04.5.ks"
+            }, 
+            "path": "/sm-shared-folder/bin/ubuntu-14.04.5-server-amd64.iso", 
+            "type": "ubuntu", 
+            "version": "14.04.05"
+        }
+    ]
+}
