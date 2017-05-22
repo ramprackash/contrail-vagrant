@@ -1,9 +1,10 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-
-#system("cp /github-build/R4.0/${SM_BUILD_NUM}/ubuntu-14-04/mitaka/artifacts/contrail-server-manager-installer_4.0.0.0-${SM_BUILD_NUM}~mitaka_all.deb ../sm-shared-folder/bin/server-manager-installer.deb")
-#system("cp /github-build/R4.0/${SM_BUILD_NUM}/ubuntu-14-04/mitaka/artifacts/contrail-cloud-docker_4.0.0.0-${SM_BUILD_NUM}~mitaka.tgz ../sm-shared-folder/bin/.")
+system("rm -f sm-shared-folder/bin/contrail-cloud-docker\*")
+system("rm -f sm-shared-folder/bin/contrail-server-manager-installer\*")
+system("cp /github-build/R4.0/${SM_BUILD_NUM}/ubuntu-14-04/mitaka/artifacts/contrail-server-manager-installer_4.0.0.0-${SM_BUILD_NUM}~mitaka_all.deb sm-shared-folder/bin/server-manager-installer.deb")
+system("cp /github-build/R4.0/${SM_BUILD_NUM}/ubuntu-14-04/mitaka/artifacts/contrail-cloud-docker_4.0.0.0-${SM_BUILD_NUM}-mitaka.tgz sm-shared-folder/bin/.")
 ENV["VAGRANT_DEFAULT_PROVIDER"] = "libvirt"
 
 Vagrant.configure("2") do |config|

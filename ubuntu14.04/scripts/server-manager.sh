@@ -12,7 +12,7 @@ apt-get -y install vim
 #apt-get -y install nfs-common
 #mkdir -p /github-build
 #sudo mount 10.160.0.152:/contrail/contrail /github-build
-dpkg -i /sm-shared-folder/bin/server-manager-mitaka-installer.deb
+dpkg -i /sm-shared-folder/bin/server-manager-installer.deb
 #dpkg -i /github-build/R4.0/${sm_build_num}/ubuntu-14-04/mitaka/artifacts/contrail-server-manager-installer_4.0.0.0-${sm_build_num}~mitaka_all.deb
 
 cd /opt/contrail/contrail_server_manager
