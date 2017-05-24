@@ -23,4 +23,5 @@ cp /shared-folder/.vimrc /root/.
 mkdir -p /root/.vim/.swp /root/.vim/.backup /root/.vim/.undo
 
 service contrail-server-manager restart
+sleep 10
 server-manager add image -f /shared-folder/json/package.json
