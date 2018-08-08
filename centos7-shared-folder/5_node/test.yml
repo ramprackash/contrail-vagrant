@@ -1,0 +1,68 @@
+provider_config:
+  bms:
+    ssh_pwd: c0ntrail123
+    ssh_user: root
+    ntpserver: 10.84.5.100
+    domainsuffix: local
+instances:
+  srvr1:
+    provider: bms
+    ip: 192.168.1.51
+    roles:
+      config_database:
+      config:
+      control:
+      analytics_database:
+      analytics:
+      webui:
+      openstack:
+  srvr2:
+    provider: bms
+    ip: 192.168.1.52
+    roles:
+      config_database:
+      config:
+      control:
+      analytics_database:
+      analytics:
+      webui:
+      openstack:
+  srvr3:
+    provider: bms
+    ip: 192.168.1.53
+    roles:
+      config_database:
+      config:
+      control:
+      analytics_database:
+      analytics:
+      webui:
+      openstack:
+  srvr4:                                                       
+    provider: bms
+    ip: 192.168.1.54
+    roles:
+      vrouter:
+      openstack_compute:
+  srvr5:
+    provider: bms
+    ip: 192.168.1.55
+    roles:
+      vrouter:
+        TSN_EVPN_MODE: True
+global_configuration:
+  CONTAINER_REGISTRY: ccregdev.sndbx.junipercloud.net
+  REGISTRY_PRIVATE_INSECURE: True
+  CONTAINER_REGISTRY_USERNAME: cntrlcld@juniper.net
+  CONTAINER_REGISTRY_PASSWORD: kEYwAntANycE
+contrail_configuration:
+  CONTRAIL_VERSION: 5.0.0-0.33
+  CONTROL_DATA_NET_LIST: 192.168.10.0/24
+  RABBITMQ_NODE_PORT: 5673
+  VROUTER_GATEWAY: 192.168.10.1
+  IPFABRIC_SERVICE_HOST: 192.168.10.150
+  KEYSTONE_AUTH_URL_VERSION: /v3
+kolla_config:
+  kolla_globals:
+    kolla_internal_vip_address: 192.168.10.150
+    kolla_external_vip_address: 192.168.1.150

@@ -1,0 +1,81 @@
+provider_config:
+  bms:
+    ssh_pwd: c0ntrail123
+    ssh_user: root
+    ntpserver: 10.84.5.100
+    domainsuffix: sm-domain.com
+instances:
+  bms1:
+    provider: bms
+    ip: 192.168.1.51
+    roles:
+      openstack:
+  bms2:
+    provider: bms
+    ip: 192.168.1.52
+    roles:
+      openstack:
+  bms3:
+    provider: bms
+    ip: 192.168.1.53
+    roles:
+      openstack:
+  bms4:
+    provider: bms
+    ip: 192.168.1.54
+    roles:
+      config_database:
+      config:
+      control:
+      analytics_database:
+      analytics:
+      webui:
+  bms5:
+    provider: bms
+    ip: 192.168.1.55
+    roles:
+      config_database:
+      config:
+      control:
+      analytics_database:
+      analytics:
+      webui:
+  bms6:
+    provider: bms
+    ip: 192.168.1.56
+    roles:
+      config_database:
+      config:
+      control:
+      analytics_database:
+      analytics:
+      webui:
+  bms7:
+    provider: bms
+    ip: 192.168.1.57
+    roles:
+      vrouter:
+        VROUTER_GATEWAY: 192.168.10.1
+      openstack_compute:
+  bms8:
+    provider: bms
+    ip: 192.168.1.58
+    roles:
+      vrouter:
+        TSN_EVPN_MODE: True
+global_configuration:
+  CONTAINER_REGISTRY: 10.84.5.81:5010
+  REGISTRY_PRIVATE_INSECURE: True
+contrail_configuration:
+  OPENSTACK_VERSION: queens
+  CONTRAIL_VERSION: 5.0-166
+  KEYSTONE_AUTH_URL_VERSION: /v3
+  CONFIG_NODEMGR__DEFAULTS__minimum_diskGB: 2
+  DATABASE_NODEMGR__DEFAULTS__minimum_diskGB: 2
+  CONTROL_NODES: 192.168.10.54,192.168.10.55,192.168.10.56
+kolla_config:
+  kolla_globals:
+    kolla_internal_vip_address: 192.168.1.100
+    enable_central_logging: yes
+  kolla_passwords:
+    keystone_admin_password: c0ntrail123

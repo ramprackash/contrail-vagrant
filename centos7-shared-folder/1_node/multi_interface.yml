@@ -1,0 +1,43 @@
+provider_config:
+  bms:
+    ssh_pwd: c0ntrail123
+    ssh_user: root
+    ntpserver: 10.84.5.100
+    domainsuffix: local
+instances:
+  srvr1:
+    provider: bms
+    ip: 192.168.1.51
+    roles:
+        config_database:
+        config:
+        control:
+        analytics_database:
+        analytics:
+        webui:
+        openstack:
+        openstack_compute:
+        vrouter:
+global_configuration:
+  CONTAINER_REGISTRY: 10.84.5.81:5010
+  REGISTRY_PRIVATE_INSECURE: True
+contrail_configuration:
+  #SSL_ENABLE: yes
+  CONTRAIL_VERSION: queens-5.0-161
+  RABBITMQ_NODE_PORT: 5673
+  CONTROL_NODES: 192.168.10.51
+  VROUTER_GATEWAY: 192.168.10.1
+kolla_config:
+  kolla_globals:
+    openstack_release: queens
+    enable_haproxy: no
+    enable_swift: no
+    enable_ironic: no
+    enable_heat: no
+    enable_barbican: no
+    kolla_enable_tls_external: no
+    kolla_external_fqdn_cacert: /etc/contrail/ssl/certs/ca-cert.pem
+    kolla_external_fqdn_cert: /etc/contrail/ssl/certs/ca-cert.pem
+  kolla_passwords:
+    keystone_admin_password: c0ntrail123
+

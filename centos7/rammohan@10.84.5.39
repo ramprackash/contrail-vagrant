@@ -1,0 +1,44 @@
+<network connections='6' ipv6='yes'>
+  <name>ctldatanetwork</name>
+  <uuid>db78d0b5-2d42-4572-b76e-a4a71b941cad</uuid>
+  <forward mode='nat'>
+    <nat>
+      <port start='1024' end='65535'/>
+    </nat>
+  </forward>
+  <bridge name='virbr3' stp='on' delay='0'/>
+  <mac address='52:54:00:a0:e1:de'/>
+  <ip address='192.168.10.1' netmask='255.255.255.0'>
+  </ip>
+</network>
+
+<network connections='6' ipv6='yes'>
+  <name>mgmtnetwork</name>
+  <uuid>812c174c-7c05-4525-b3f0-d1950deec169</uuid>
+  <forward mode='nat'>
+    <nat>
+      <port start='1024' end='65535'/>
+    </nat>
+  </forward>
+  <bridge name='virbr2' stp='on' delay='0'/>
+  <mac address='52:54:00:4c:72:0c'/>
+  <ip address='192.168.1.1' netmask='255.255.255.0'>
+  </ip>
+</network>
+
+<network>
+  <name>default</name>
+  <uuid>cc45c58c-6b8b-4339-b488-7bb98010238a</uuid>
+  <forward mode='nat'>
+    <nat>
+      <port start='1024' end='65535'/>
+    </nat>
+  </forward>
+  <bridge name='virbr0' stp='on' delay='0'/>
+  <ip address='192.168.122.1' netmask='255.255.255.0'>
+    <dhcp>
+      <range start='192.168.122.2' end='192.168.122.254'/>
+    </dhcp>
+  </ip>
+</network>
+

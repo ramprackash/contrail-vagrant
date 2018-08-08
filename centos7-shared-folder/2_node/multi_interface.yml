@@ -1,0 +1,38 @@
+global_configuration:
+  CONTAINER_REGISTRY: 10.84.5.81:5010
+  REGISTRY_PRIVATE_INSECURE: True
+provider_config:
+  bms:
+    ssh_pwd: c0ntrail123
+    ssh_user: root
+    ntpserver: 10.84.5.100
+    domainsuffix: sm-domain.com
+instances:
+  bms1:
+    provider: bms
+    ip: 192.168.1.51
+    roles:
+        config_database:
+        config:
+        control:
+        analytics_database:
+        analytics:
+        webui:
+        openstack:
+  bms2:
+    provider: bms
+    ip: 192.168.1.52
+    roles:
+        vrouter:
+        openstack_compute:
+contrail_configuration:
+  CONTRAIL_VERSION: 5.0-178
+  OPENSTACK_VERSION: queens
+  CLOUD_ORCHESTRATOR: openstack
+  RABBITMQ_NODE_PORT: 5673
+  VROUTER_GATEWAY: 192.168.10.1
+  CONTROL_NODES: 192.168.10.51
+  SSL_ENABLE: True
+kolla_config:
+  kolla_globals:
+    enable_haproxy: no

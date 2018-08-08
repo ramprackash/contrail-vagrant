@@ -1,0 +1,35 @@
+provider_config:
+  bms:
+    ssh_pwd: c0ntrail123
+    ssh_user: root
+    ntpserver: 10.84.5.100
+    domainsuffix: local
+instances:
+  srvr1:
+    provider: bms
+    ip: 192.168.1.61
+    roles:
+      openstack:
+  srvr2:
+    provider: bms
+    ip: 192.168.1.62
+    roles:
+      config_database:
+      config:
+      control:
+      analytics_database:
+      analytics:
+      webui:
+  srvr3:
+    provider: bms
+    ip: 192.168.1.63
+    roles:
+      vrouter:
+      openstack_compute:
+contrail_configuration:
+  CONTROL_NODES: 192.168.10.62
+  VROUTER_GATEWAY: 192.168.10.1
+  KEYSTONE_AUTH_URL_VERSION: /v3
+kolla_config:
+  kolla_globals:
+    enable_haproxy: no

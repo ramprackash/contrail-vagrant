@@ -1,0 +1,41 @@
+provider_config:
+  bms:
+    domainsuffix: englab.juniper.net
+    ssh_pwd: c0ntrail123
+    ssh_user: root
+    ntpserver: 10.84.5.100
+instances:
+  srvr1:
+    provider: bms
+    ip: 192.168.1.51
+    roles:
+      openstack:
+  srvr2:
+    provider: bms
+    ip: 192.168.1.52
+    roles:
+      config_database:
+      config:
+      control:
+      analytics_database:
+      analytics:
+      webui:
+  srvr3:
+    provider: bms
+    ip: 192.168.1.53
+    roles:
+      vrouter:
+      openstack_compute:
+global_configuration:
+  CONTAINER_REGISTRY: 10.84.5.81:5010
+  REGISTRY_PRIVATE_INSECURE: True
+contrail_configuration:
+  OPENSTACK_VERSION: queens
+  CONTRAIL_VERSION: master-156
+  CONTROL_NODES: 192.168.10.52
+  VROUTER_GATEWAY: 192.168.10.1
+  CONFIG_NODEMGR__DEFAULTS__minimum_diskGB: 2
+  DATABASE_NODEMGR__DEFAULTS__minimum_diskGB: 2
+kolla_config:
+  kolla_globals:
+    enable_haproxy: no

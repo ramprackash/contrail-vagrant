@@ -1,0 +1,16 @@
+provider_config:
+  bms:
+    ntpserver: 10.84.5.100
+    domainsuffix: local
+instances:
+  bms1:
+    provider: bms
+    ip: localhost
+contrail_configuration:
+  RABBITMQ_NODE_PORT: 5673
+  AUTH_MODE: keystone
+  KEYSTONE_AUTH_URL_VERSION: /v3
+kolla_config:
+  kolla_globals:
+    customize_etc_hosts: yes
+    enable_haproxy: no

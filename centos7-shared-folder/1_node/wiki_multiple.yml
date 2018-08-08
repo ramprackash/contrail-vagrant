@@ -1,0 +1,53 @@
+provider_config:
+  bms:
+    ssh_pwd: c0ntrail123
+    ssh_user: root
+    ntpserver: 10.84.5.100
+    domainsuffix: local
+instances:
+  srvr1:
+    provider: bms
+    ip: 192.168.1.51
+    roles:
+      config_database:
+      config:
+      control:
+      analytics_database:
+      analytics:
+      webui:
+      openstack:
+      openstack_compute:
+      vrouter:
+contrail_configuration:
+  CONTROL_NODES: 192.168.10.51
+  RABBITMQ_NODE_PORT: 5673
+  AUTH_MODE: keystone
+  KEYSTONE_AUTH_URL_VERSION: /v3
+  VROUTER_GATEWAY: 192.168.10.1
+  CONFIG_NODEMGR__DEFAULTS__minimum_diskGB: 2
+  DATABASE_NODEMGR__DEFAULTS__minimum_diskGB: 2
+kolla_config:
+  kolla_globals:
+    enable_haproxy: no
+  kolla_passwords:
+    keystone_admin_password: c0ntrail123
+
+#provider_config:
+#  bms:
+#    ssh_pwd: c0ntrail123
+#    ssh_user: root
+#    ntpserver: 10.84.5.100
+#    domainsuffix: local
+#instances:
+#  aio:
+#    provider: bms
+#    ip: 192.168.1.60
+#contrail_configuration:
+#  RABBITMQ_NODE_PORT: 5673
+#  AUTH_MODE: keystone
+#  KEYSTONE_AUTH_URL_VERSION: /v3
+#kolla_config:
+#  kolla_globals:
+#    enable_haproxy: no
+#  kolla_passwords:
+#    keystone_admin_password: c0ntrail123

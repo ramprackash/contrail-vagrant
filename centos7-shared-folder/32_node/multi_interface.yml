@@ -1,0 +1,239 @@
+provider_config:
+  bms:
+    ssh_pwd: c0ntrail123
+    ssh_user: root
+    ntpserver: 10.84.5.100
+    domainsuffix: contrail.juniper.net
+instances:
+  b3s1:
+    provider: bms
+    ip: 10.84.23.1
+    roles:
+      openstack:
+      config_database:
+      config:
+      control:
+      analytics_database:
+      analytics:
+      webui:
+  b3s2:
+    provider: bms
+    ip: 10.84.23.2
+    roles:
+      openstack:
+      config_database:
+      config:
+      control:
+      analytics_database:
+      analytics:
+      webui:
+  b3s4:
+    provider: bms
+    ip: 10.84.23.4
+    roles:
+      openstack:
+      config_database:
+      config:
+      control:
+      analytics_database:
+      analytics:
+      webui:
+  b3s5:
+    provider: bms
+    ip: 10.84.23.5
+    roles:
+      vrouter:
+      openstack_compute:
+  b3s6:
+    provider: bms
+    ip: 10.84.23.6
+    roles:
+      vrouter:
+      openstack_compute:
+  b3s7:
+    provider: bms
+    ip: 10.84.23.7
+    roles:
+      vrouter:
+      openstack_compute:
+  b3s8:
+    provider: bms
+    ip: 10.84.23.8
+    roles:
+      vrouter:
+      openstack_compute:
+  b3s9:
+    provider: bms
+    ip: 10.84.23.9
+    roles:
+      vrouter:
+      openstack_compute:
+  b3s10:
+    provider: bms
+    ip: 10.84.23.10
+    roles:
+      vrouter:
+      openstack_compute:
+  b3s11:
+    provider: bms
+    ip: 10.84.23.11
+    roles:
+      vrouter:
+      openstack_compute:
+  b3s12:
+    provider: bms
+    ip: 10.84.23.12
+    roles:
+      vrouter:
+      openstack_compute:
+  b3s13:
+    provider: bms
+    ip: 10.84.23.13
+    roles:
+      vrouter:
+      openstack_compute:
+  b3s14:
+    provider: bms
+    ip: 10.84.23.14
+    roles:
+      vrouter:
+      openstack_compute:
+  b3s15:
+    provider: bms
+    ip: 10.84.23.15
+    roles:
+      vrouter:
+      openstack_compute:
+  b3s16:
+    provider: bms
+    ip: 10.84.23.16
+    roles:
+      vrouter:
+      openstack_compute:
+  b3s17:
+    provider: bms
+    ip: 10.84.23.17
+    roles:
+      vrouter:
+      openstack_compute:
+  b3s18:
+    provider: bms
+    ip: 10.84.23.18
+    roles:
+      vrouter:
+      openstack_compute:
+  b3s19:
+    provider: bms
+    ip: 10.84.23.19
+    roles:
+      vrouter:
+      openstack_compute:
+  b5s2:
+    provider: bms
+    ip: 10.84.54.6
+    roles:
+      vrouter:
+      openstack_compute:
+  b5s3:
+    provider: bms
+    ip: 10.84.54.7
+    roles:
+      vrouter:
+      openstack_compute:
+  b5s4:
+    provider: bms
+    ip: 10.84.54.8
+    roles:
+      vrouter:
+      openstack_compute:
+  b5s5:
+    provider: bms
+    ip: 10.84.54.9
+    roles:
+      vrouter:
+      openstack_compute:
+  b5s6:
+    provider: bms
+    ip: 10.84.54.10
+    roles:
+      vrouter:
+      openstack_compute:
+  b5s7:
+    provider: bms
+    ip: 10.84.54.11
+    roles:
+      vrouter:
+      openstack_compute:
+  b5s8:
+    provider: bms
+    ip: 10.84.54.12
+    roles:
+      vrouter:
+      openstack_compute:
+  b5s9:
+    provider: bms
+    ip: 10.84.54.13
+    roles:
+      vrouter:
+      openstack_compute:
+  b5s10:
+    provider: bms
+    ip: 10.84.54.14
+    roles:
+      vrouter:
+      openstack_compute:
+  b5s11:
+    provider: bms
+    ip: 10.84.54.15
+    roles:
+      vrouter:
+      openstack_compute:
+  b5s12:
+    provider: bms
+    ip: 10.84.54.16
+    roles:
+      vrouter:
+      openstack_compute:
+  b5s13:
+    provider: bms
+    ip: 10.84.54.17
+    roles:
+      vrouter:
+      openstack_compute:
+  b5s14:
+    provider: bms
+    ip: 10.84.54.18
+    roles:
+      vrouter:
+      openstack_compute:
+  b5s15:
+    provider: bms
+    ip: 10.84.54.19
+    roles:
+      vrouter:
+      openstack_compute:
+  b5s16:
+    provider: bms
+    ip: 10.84.54.20
+    roles:
+      vrouter:
+      openstack_compute:
+global_configuration:
+  CONTAINER_REGISTRY: 10.84.5.81:5010
+  REGISTRY_PRIVATE_INSECURE: True
+contrail_configuration:
+  OPENSTACK_VERSION: queens
+  CONTRAIL_VERSION: 5.0-172
+  RABBITMQ_NODE_PORT: 5673
+  CONTROL_NODES: 20.0.0.1,20.0.0.2,20.0.0.3
+  KEYSTONE_AUTH_URL_VERSION: /v3
+  ENCAP_PRIORITY: "VXLAN,MPLSoUDP,MPLSoGRE"
+  CONFIG_NODEMGR__DEFAULTS__minimum_diskGB: 2
+  DATABASE_NODEMGR__DEFAULTS__minimum_diskGB: 2
+
+kolla_config:
+  kolla_globals:
+    kolla_internal_vip_address: 10.84.23.100
+  kolla_passwords:
+    keystone_admin_password: c0ntrail123
+

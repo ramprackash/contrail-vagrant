@@ -1,0 +1,63 @@
+CONTAINER_REGISTRY: ci-repo.englab.juniper.net:5000
+REGISTRY_PRIVATE_INSECURE: True
+provider_config:
+  bms:
+    ssh_pwd: c0ntrail123
+    ssh_user: root
+    ntpserver: 10.84.5.100
+    domainsuffix: local
+instances:
+  srvr1:
+    provider: bms
+    ip: 192.168.1.51
+    roles:
+      config_database:
+      config:
+      control:
+      analytics_database:
+      analytics:
+      webui:
+      openstack:
+  srvr2:
+    provider: bms
+    ip: 192.168.1.52
+    roles:
+      config_database:
+      config:
+      control:
+      analytics_database:
+      analytics:
+      webui:
+      openstack:
+  srvr3:
+    provider: bms
+    ip: 192.168.1.53
+    roles:
+      config_database:
+      config:
+      control:
+      analytics_database:
+      analytics:
+      webui:
+      openstack:
+  srvr4:                                                       
+    provider: bms
+    ip: 192.168.1.54
+    roles:
+      vrouter:
+      openstack_compute:
+  srvr5:
+    provider: bms
+    ip: 192.168.1.55
+    roles:
+      vrouter:
+      openstack_compute:
+contrail_configuration:
+  CONTROL_DATA_NET_LIST: 192.168.1.0/24
+  RABBITMQ_NODE_PORT: 5673
+  VROUTER_GATEWAY: 192.168.1.1
+  IPFABRIC_SERVICE_HOST: 192.168.1.150
+  KEYSTONE_AUTH_URL_VERSION: /v3
+kolla_config:
+  kolla_globals:
+    enable_swift: no

@@ -1,0 +1,68 @@
+provider_config:
+  bms:
+    domainsuffix: local
+    ntpserver: 10.84.5.100
+    ssh_pwd: c0ntrail123
+    ssh_user: root
+
+instances:
+  server1:
+      ip: 192.168.1.51
+      provider: bms
+      roles:
+          analytics: null
+          analytics_database: null
+          config: null
+          config_database: null
+          control: null
+          webui: null
+  server2:
+      ip: 192.168.1.52
+      provider: bms
+      roles:
+          analytics: null
+          analytics_database: null
+          config: null
+          config_database: null
+          control: null
+          webui: null
+  server3:
+      ip: 192.168.1.53
+      provider: bms
+      roles:
+          analytics: null
+          analytics_database: null
+          config: null
+          config_database: null
+          control: null
+          k8s_master: null
+          kubemanager: null
+          webui: null
+  server4:
+      ip: 192.168.1.54
+      provider: bms
+      roles:
+          k8s_node: null
+          vrouter: null
+  server5:
+      ip: 192.168.1.55
+      provider: bms
+      roles:
+          k8s_node: null
+          vrouter: null
+  server6:
+      ip: 192.168.1.56
+      provider: bms
+      roles:
+          k8s_node: null
+          vrouter: null
+
+contrail_configuration:
+  CLOUD_ORCHESTRATOR: kubernetes
+  METADATA_PROXY_SECRET: c0ntrail123
+  AAA_MODE: no-auth
+  CONTROLLER_NODES: 192.168.10.51,192.168.10.52,192.168.10.53
+  CONTROL_DATA_NET_LIST: 192.168.10.0/24
+  PHYSICAL_INTERFACE: eth2
+  VROUTER_GATEWAY: 192.168.10.1
+  two_interface: true
