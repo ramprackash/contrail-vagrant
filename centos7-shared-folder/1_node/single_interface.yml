@@ -25,5 +25,3 @@ contrail_configuration:
 kolla_config:
   kolla_globals:
     enable_haproxy: no
-  kolla_passwords:
-    keystone_admin_password: c0ntrail123

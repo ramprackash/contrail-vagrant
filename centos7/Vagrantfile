@@ -13,48 +13,15 @@ Vagrant.configure("2") do |config|
         libvirt.uri = "qemu:///system"
     end
 
-    # Configure Contrail Deployer Ocata
-    config.vm.define "deployer" do |vm1|
-        system("if [ #{ARGV[0]} = 'up' ]; then
-                ssh-keygen -f '/root/.ssh/known_hosts' -R 192.168.1.50
-                fi")
-
-        vm1.vm.box = "centos/7"
-        vm1.vm.hostname="contrail-deployer"
-        vm1.vm.provider :libvirt do |domain|
-            domain.memory = 65536
-            domain.machine_virtual_size = 80
-            domain.boot 'network'
-            domain.boot 'hd'
-            domain.cpus = 4
-        end
-        # Shared folders relative to the root (where Vagrantfile is found)
-        config.vm.synced_folder "../centos7-shared-folder/", "/shared-folder", nfs:true, nfs_export: true, type: "nfs"
-        vm1.vm.network  :private_network,
-                        :ip => "192.168.1.50",
-                        :libvirt__netmask => "255.255.255.0",
-                        :libvirt__network_name => "mgmtnetwork",
-                        # :libvirt__forward_mode => "veryisolated",
-                        :libvirt__dhcp_enabled => false,
-                        :mac => "52:54:00:00:01:d0"
-        vm1.vm.network  :private_network,
-                        :ip => "192.168.10.50",
-                        :libvirt__netmask => "255.255.255.0",
-                        :libvirt__network_name => "ctldatanetwork",
-                        # :libvirt__forward_mode => "veryisolated",
-                        :libvirt__dhcp_enabled => false,
-                        :mac => "52:54:00:00:10:d0"
-        vm1.vm.provision "shell", path: "scripts/aio.sh", env: { "config_file" => "#{ENV['config_file']}" }
-    end
 
     # Configure Centos target hosts
-    (1..9).each do |i|
-        config.vm.define "srvr#{i}" do |vm1|
+    (1..5).each do |i|
+        config.vm.define "centos#{i}" do |vm1|
             system("if [ #{ARGV[0]} = 'up' ]; then
-                ssh-keygen -f '/root/.ssh/known_hosts' -R 192.168.1.5#{i}
+                ssh-keygen -f '/root/.ssh/known_hosts' -R 192.168.10.7#{i}
                 fi")
             vm1.vm.box = "centos/7"
-            vm1.vm.hostname="srvr#{i}"
+            vm1.vm.hostname="centos#{i}"
             vm1.vm.provider :libvirt do |domain|
                 domain.storage :file, :size => '20G'
                 domain.memory = 65536
@@ -66,54 +33,20 @@ Vagrant.configure("2") do |config|
             # Shared folders relative to the root (where Vagrantfile is found)
             config.vm.synced_folder "../centos7-shared-folder/", "/shared-folder", nfs:true, nfs_export: true, type: "nfs"
             vm1.vm.network  :private_network,
-                            :ip => "192.168.1.5#{i}",
-                            :libvirt__netmask => "255.255.255.0",
-                            :libvirt__network_name => "mgmtnetwork",
-                            # :libvirt__forward_mode => "veryisolated",
-                            :libvirt__dhcp_enabled => false,
-                            :mac => "52:54:00:00:01:d#{i}"
-            vm1.vm.network  :private_network,
-                            :ip => "192.168.10.5#{i}",
+                            :ip => "192.168.10.7#{i}",
                             :libvirt__netmask => "255.255.255.0",
                             :libvirt__network_name => "ctldatanetwork",
                             # :libvirt__forward_mode => "veryisolated",
                             :libvirt__dhcp_enabled => false,
                             :mac => "52:54:00:00:10:d#{i}"
-            vm1.vm.provision "shell", path: "scripts/target-server.sh"
-        end
-    end
-    # Configure Centos compute hosts
-    (1..32).each do |i|
-        config.vm.define "compute#{i}" do |vm1|
-            lastword = 60 + i
-            system("if [ #{ARGV[0]} = 'up' ]; then
-                ssh-keygen -f '/root/.ssh/known_hosts' -R 192.168.1.#{lastword}
-                fi")
-            vm1.vm.box = "centos/7"
-            vm1.vm.hostname="compute#{i}"
-            vm1.vm.provider :libvirt do |domain|
-                domain.memory = 65536
-                domain.machine_virtual_size = 80
-                domain.boot 'network'
-                domain.boot 'hd'
-                domain.cpus = 4
-            end
-            # Shared folders relative to the root (where Vagrantfile is found)
-            config.vm.synced_folder "../centos7-shared-folder/", "/shared-folder", nfs:true, nfs_export: true, type: "nfs"
-            vm1.vm.network  :private_network,
-                            :ip => "192.168.10.#{lastword}",
-                            :libvirt__netmask => "255.255.255.0",
-                            :libvirt__network_name => "ctldatanetwork",
-                            # :libvirt__forward_mode => "veryisolated",
-                            :libvirt__dhcp_enabled => false,
-                            :mac => "52:54:00:00:10:#{lastword}"
-            vm1.vm.network  :private_network,
-                            :ip => "192.168.1.#{lastword}",
-                            :libvirt__netmask => "255.255.255.0",
-                            :libvirt__network_name => "mgmtnetwork",
-                            # :libvirt__forward_mode => "veryisolated",
-                            :libvirt__dhcp_enabled => false,
-                            :mac => "52:54:00:00:01:#{lastword}"
+            vm1.vm.network  :public_network,
+                            :bridge => "publicbr",
+#                            :mode => "bridge",
+#                            :type => "bridge",
+#                            :auto_config => true,
+#                            :ip => "10.84.22.7#{i}",
+                            :dev => "em1",
+                            :mac => "52:54:a1:b2:01:e#{i}"
             vm1.vm.provision "shell", path: "scripts/target-server.sh"
         end
     end

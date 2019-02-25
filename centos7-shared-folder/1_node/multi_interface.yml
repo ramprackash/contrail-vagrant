@@ -1,43 +1,44 @@
+global_configuration:
+  CONTAINER_REGISTRY: 10.84.22.43:6666
+  REGISTRY_PRIVATE_INSECURE: True
 provider_config:
   bms:
-    ssh_pwd: c0ntrail123
-    ssh_user: root
     ntpserver: 10.84.5.100
     domainsuffix: local
 instances:
   srvr1:
+    ssh_pwd: c0ntrail123
+    ssh_user: root
     provider: bms
     ip: 192.168.1.51
     roles:
-        config_database:
-        config:
-        control:
-        analytics_database:
-        analytics:
-        webui:
-        openstack:
-        openstack_compute:
-        vrouter:
-global_configuration:
-  CONTAINER_REGISTRY: 10.84.5.81:5010
-  REGISTRY_PRIVATE_INSECURE: True
+      config_database:
+      config:
+      control:
+      analytics_database:
+      analytics:
+      webui:
+      openstack:
+      openstack_compute:
+      vrouter:
 contrail_configuration:
-  #SSL_ENABLE: yes
-  CONTRAIL_VERSION: queens-5.0-161
+  SECURE_INTROSPECT: True
+  #SSL_ENABLE: True
+  VROUTER_GATEWAY: 192.168.10.1
+  CONTRAIL_VERSION: dev
+  OPENSTACK_VERSION: queens
   RABBITMQ_NODE_PORT: 5673
   CONTROL_NODES: 192.168.10.51
-  VROUTER_GATEWAY: 192.168.10.1
+  CONFIG_DATABASE_NODEMGR__DEFAULTS__minimum_diskGB: 2
+  DATABASE_NODEMGR__DEFAULTS__minimum_diskGB: 2
 kolla_config:
   kolla_globals:
-    openstack_release: queens
     enable_haproxy: no
-    enable_swift: no
-    enable_ironic: no
     enable_heat: no
+    enable_swift: no
     enable_barbican: no
-    kolla_enable_tls_external: no
-    kolla_external_fqdn_cacert: /etc/contrail/ssl/certs/ca-cert.pem
-    kolla_external_fqdn_cert: /etc/contrail/ssl/certs/ca-cert.pem
+    enable_ironic: no
+    force_checkout: yes
   kolla_passwords:
     keystone_admin_password: c0ntrail123
 

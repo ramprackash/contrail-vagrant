@@ -18,6 +18,8 @@ cp /shared-folder/id_rsa.pub authorized_keys
 cp /shared-folder/sm-id_rsa.pub ~/.ssh/id_rsa.pub
 cp /shared-folder/sm-id_rsa ~/.ssh/id_rsa
 
+chmod 640 ~/.ssh/id_rsa.pub
+chmod 600 ~/.ssh/id_rsa
 chmod 600 ~/.ssh/authorized_keys
 chown -R root ~/.ssh
 
@@ -25,6 +27,7 @@ chown -R root ~/.ssh
 hostname=`hostname`
 #echo "127.0.0.1 localhost" >> /etc/hosts
 #echo "127.0.0.1 $hostname.sm-domain.com $hostname" >> /etc/hosts
+rm -f /etc/localtime && ln -s /usr/share/zoneinfo/US/Pacific /etc/localtime
 
 yum install -y epel-release
 
@@ -35,15 +38,18 @@ yum -y install vim git python-pip sshpass
 
 #yum -y install python-pip
 pip install ansible
+pip install requests
 #pip install docker-compose==1.9.0
 #modprobe ip_vs
 
 
 cd /root && git clone https://github.com/Juniper/contrail-ansible-deployer.git
-cd /root/contrail-ansible-deployer && git checkout R5.0
+#cd /root/contrail-ansible-deployer && git checkout R5.0
 git config --global user.email "rammohan@juniper.net"
 git config --global user.name "Ramprakash"
 
+#cd /root && git clone https://github.com/Juniper/contrail-command-deployer.git
+#cd /root/contrail-command-deployer && git checkout R5.0
 #yum -y install kernel
 #yum update
 #reboot -h now

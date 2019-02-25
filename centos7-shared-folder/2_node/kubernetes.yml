@@ -17,17 +17,17 @@ instances:
       analytics:
       webui:
       k8s_master:
+      kubemanager:
   srvr2:
    provider: bms
    ip: 192.168.1.52
    roles:
      vrouter:
+       VROUTER_GATEWAY: 192.168.10.1
      k8s_node:
 global_configuration:
-  CONTAINER_REGISTRY: ccregdev.sndbx.junipercloud.net
+  CONTAINER_REGISTRY: ci-repo.englab.juniper.net:5010
   REGISTRY_PRIVATE_INSECURE: True
-  CONTAINER_REGISTRY_USERNAME: cntrlcld@juniper.net
-  CONTAINER_REGISTRY_PASSWORD: kEYwAntANycE
 contrail_configuration:
-  CONTRAIL_VERSION: latest
-  KUBERNETES_CLUSTER_PROJECT: {}
+  CONTRAIL_VERSION: 5.0-172
+  CONTROL_NODES: 192.168.10.51
