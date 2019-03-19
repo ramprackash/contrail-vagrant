@@ -13,40 +13,41 @@ Vagrant.configure("2") do |config|
         libvirt.uri = "qemu:///system"
     end
 
-
-    # Configure Centos target hosts
-    (1..5).each do |i|
-        config.vm.define "centos#{i}" do |vm1|
+    # Configure Centos compute nodes 21-29
+    (0..29).each do |i|
+        hostnum = ( 21 + i )
+        nodename = ( "compute" + hostnum.to_s ).to_sym
+        config.vm.define nodename do |vm1|
             system("if [ #{ARGV[0]} = 'up' ]; then
-                ssh-keygen -f '/root/.ssh/known_hosts' -R 192.168.10.7#{i}
+                ssh-keygen -f '/root/.ssh/known_hosts' -R 192.168.10.#{hostnum}
                 fi")
             vm1.vm.box = "centos/7"
-            vm1.vm.hostname="centos#{i}"
+            vm1.vm.hostname="compute#{hostnum}"
             vm1.vm.provider :libvirt do |domain|
                 domain.storage :file, :size => '20G'
-                domain.memory = 65536
-                domain.machine_virtual_size = 80
+                domain.memory = 8192
+#domain.machine_virtual_size = 80
                 domain.boot 'network'
                 domain.boot 'hd'
-                domain.cpus = 4
+                domain.cpus = 1
             end
             # Shared folders relative to the root (where Vagrantfile is found)
-            config.vm.synced_folder "../centos7-shared-folder/", "/shared-folder", nfs:true, nfs_export: true, type: "nfs"
+            config.vm.synced_folder "../centos7-shared-folder/", "/shared-folder", type:"nfs", nfs_export:true, nfs_version:3, nfs_udp:true
             vm1.vm.network  :private_network,
-                            :ip => "192.168.10.7#{i}",
+                            :ip => "192.168.10.#{hostnum}",
                             :libvirt__netmask => "255.255.255.0",
                             :libvirt__network_name => "ctldatanetwork",
                             # :libvirt__forward_mode => "veryisolated",
                             :libvirt__dhcp_enabled => false,
-                            :mac => "52:54:00:00:10:d#{i}"
+                            :mac => "52:54:69:00:10:#{hostnum}"
             vm1.vm.network  :public_network,
-                            :bridge => "publicbr",
-#                            :mode => "bridge",
-#                            :type => "bridge",
-#                            :auto_config => true,
+                            :bridge => "mgmtbr",
+                            :mode => "bridge",
+                            :type => "bridge",
+                            :auto_config => true,
 #                            :ip => "10.84.22.7#{i}",
-                            :dev => "em1",
-                            :mac => "52:54:a1:b2:01:e#{i}"
+                            :dev => "mgmtbr",
+                            :mac => "52:54:69:b2:01:#{hostnum}"
             vm1.vm.provision "shell", path: "scripts/target-server.sh"
         end
     end
