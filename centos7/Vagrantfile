@@ -24,12 +24,11 @@ Vagrant.configure("2") do |config|
             vm1.vm.hostname="centos#{i}"
             vm1.vm.provider :libvirt do |domain|
                 domain.storage :file, :size => '20G'
-                domain.memory = 8192
-#domain.memory = 65536
-#domain.machine_virtual_size = 80
+                domain.memory = 65536
+                domain.machine_virtual_size = 80
                 domain.boot 'network'
                 domain.boot 'hd'
-                domain.cpus = 1
+                domain.cpus = 4
             end
             # Shared folders relative to the root (where Vagrantfile is found)
             config.vm.synced_folder "../centos7-shared-folder/", "/shared-folder", nfs:true, nfs_export: true, type: "nfs"
