@@ -13,8 +13,8 @@ Vagrant.configure("2") do |config|
         libvirt.uri = "qemu:///system"
     end
 
-    # Configure Centos compute nodes 21-29
-    (0..29).each do |i|
+    # Configure Centos compute nodes 21-50
+    (0..14).each do |i|
         hostnum = ( 21 + i )
         nodename = ( "compute" + hostnum.to_s ).to_sym
         config.vm.define nodename do |vm1|

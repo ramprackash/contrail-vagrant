@@ -27,11 +27,13 @@ chown -R root ~/.ssh
 sed -i '/^127.0.0.1.*$/d' /etc/hosts
 sed -i '/^::1.*$/d' /etc/hosts
 hostname=`hostname`
-echo "127.0.0.1 $hostname.sm-domain.com $hostname" >> /etc/hosts
+echo "127.0.0.1 $hostname.smdomain.com $hostname" >> /etc/hosts
 #echo "127.0.0.1 localhost" >> /etc/hosts
 rm -f /etc/localtime && ln -s /usr/share/zoneinfo/US/Pacific /etc/localtime
 
-yum -y install strace
+##yum -y install strace
+echo "waiting for routes to stabilize..."
+sleep 10
 
 ip route delete default via 192.168.121.1 2>&1 >/dev/null
 #ip route add 0.0.0.0 via 10.84.22.254 dev eth1
