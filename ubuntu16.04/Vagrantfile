@@ -1,10 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-system("rm -f sm-shared-folder/bin/contrail-cloud-docker\*")
-system("rm -f sm-shared-folder/bin/contrail-server-manager-installer\*")
-system("cp /github-build/R4.0/${SM_BUILD_NUM}/ubuntu-16-04/newton/artifacts/contrail-server-manager-installer_4.0.0.0-${SM_BUILD_NUM}~newton_all.deb sm-shared-folder/bin/server-manager-installer.deb")
-system("cp /github-build/R4.0/${SM_BUILD_NUM}/ubuntu-16-04/newton/artifacts/contrail-cloud-docker_4.0.0.0-${SM_BUILD_NUM}-newton.tgz sm-shared-folder/bin/.")
 ENV["VAGRANT_DEFAULT_PROVIDER"] = "libvirt"
 
 Vagrant.configure("2") do |config|
@@ -16,92 +12,38 @@ Vagrant.configure("2") do |config|
         libvirt.uri = "qemu:///system"
     end
 
-    # Configure Server-manager-lite VM.
-    config.vm.define "server-manager-lite" do |vm1|
-        vm1.vm.box = "ubuntu-16.04.02"
-        vm1.vm.hostname="server-manager-lite.sm-domain.com"
-        vm1.vm.provider :libvirt do |domain|
-            domain.memory = 16384
-            domain.cpus = 4
-        end
-        # Shared folders relative to the root (where Vagrantfile is found)
-        config.vm.synced_folder "sm-shared-folder/", "/sm-shared-folder"
-        config.vm.synced_folder "shared-folder/", "/shared-folder"
-        vm1.vm.network  :private_network,
-                        :ip => "192.168.1.11",
-                        :libvirt__netmask => "255.255.255.0",
-                        :libvirt__network_name => "mgmtnetwork",
-                        # :libvirt__forward_mode => "veryisolated",
-                        :libvirt__dhcp_enabled => false,
-                        :mac => "52:54:00:00:01:11"
-        vm1.vm.network  :private_network,
-                        :ip => "192.168.10.11",
-                        :libvirt__netmask => "255.255.255.0",
-                        :libvirt__network_name => "ctldatanetwork",
-                        # :libvirt__forward_mode => "veryisolated",
-                        :libvirt__dhcp_enabled => false,
-                        :mac => "52:54:00:00:10:11"
-        vm1.vm.provision "shell", path: "scripts/server-manager-lite.sh"
-    end
-
-    # Configure Server-manager VM.
-    config.vm.define "server-manager" do |vm1|
-        vm1.vm.box = "ubuntu-16.04.02"
-        vm1.vm.hostname="server-manager.sm-domain.com"
-        vm1.vm.provider :libvirt do |domain|
-            domain.memory = 16384
-            domain.cpus = 4
-        end
-        config.vm.synced_folder "sm-shared-folder/", "/sm-shared-folder", nfs: true, nfs_export: true, type: "nfs"
-
-        config.vm.synced_folder "shared-folder/", "/shared-folder", nfs: true, nfs_export: true, type: "nfs"
-
-        #config.vm.synced_folder "/github-build", "/github-build", nfs: true, nfs_export: true, type: "nfs"
-
-        vm1.vm.network  :private_network,
-                        :ip => "192.168.1.10",
-                        :libvirt__netmask => "255.255.255.0",
-                        :libvirt__network_name => "mgmtnetwork",
-                        # :libvirt__forward_mode => "veryisolated",
-                        :libvirt__dhcp_enabled => false,
-                        :mac => "52:54:00:00:01:10"
-        vm1.vm.network  :private_network,
-                        :ip => "192.168.10.10",
-                        :libvirt__netmask => "255.255.255.0",
-                        :libvirt__network_name => "ctldatanetwork",
-                        # :libvirt__forward_mode => "veryisolated",
-                        :libvirt__dhcp_enabled => false,
-                        :mac => "52:54:00:00:10:10"
-        vm1.vm.provision "shell", path: "scripts/server-manager.sh", env: { "sm_build_num" => "#{ENV['SM_BUILD_NUM']}" }
-    end
-
     # Setup target cluster servers
-    (0..9).each do |i|
+    (1..9).each do |i|
         config.vm.define "server#{i}" do |vm2|
-            vm2.vm.box = "ubuntu-16.04.02"
-            vm2.vm.hostname="server#{i}"
+            vm2.vm.box = "generic/ubuntu1604"
+            vm2.vm.hostname="b2s43-vm#{i}"
             vm2.vm.provider :libvirt do |domain|
                 domain.memory = 16384
                 domain.cpus = 4
                 domain.boot 'network'
                 domain.boot 'hd'
             end
-            vm2.vm.synced_folder "target-shared-folder/", "/target-shared-folder"
-            vm2.vm.synced_folder "shared-folder/", "/shared-folder"
-            #server_num = #{i} + 20
-            vm2.vm.network :private_network,
-                           :ip => "192.168.1.2#{i}",
-                           :mac => "52:54:00:00:01:2#{i}",
-                           :libvirt__network_name => "mgmtnetwork",
-                           # :libvirt__forward_mode => "veryisolated",
-                           :libvirt__dhcp_enabled => false
-            vm2.vm.network :private_network,
-                           :ip => "192.168.10.2#{i}",
-                           :mac => "52:54:00:00:10:2#{i}",
-                           :libvirt__network_name => "ctldatanetwork",
-                           # :libvirt__forward_mode => "veryisolated",
-                           :libvirt__dhcp_enabled => false
-            vm2.vm.provision "shell", path: "scripts/target-server.sh"
+#config.vm.synced_folder "../centos7-shared-folder/", "/shared-folder", nfs:true, nfs_export: true, type: "nfs"
+        config.vm.synced_folder "../centos7-shared-folder/", "/shared-folder", type: "rsync"
+        vm2.vm.network  :private_network,
+                        :ip => "192.168.10.7#{i}",
+                        :libvirt__netmask => "255.255.255.0",
+                        :libvirt__network_name => "ctldatanetwork",
+                        # :libvirt__forward_mode => "veryisolated",
+                        :libvirt__dhcp_enabled => false,
+                        :mac => "52:54:00:00:10:d#{i}"
+        vm2.vm.network  :public_network,
+                        :bridge => "publicbr",
+#                        :mode => "bridge",
+#                        :type => "bridge",
+#                        :auto_config => true,
+#                        :ip => "10.84.22.7#{i}",
+                        :dev => "eno1",
+                        :mac => "52:54:a1:b2:01:e#{i}"
+        vm2.vm.provision "shell", path: "scripts/target-server.sh"
+        vm2.vm.provision "ansible" do |ansible|
+            ansible.playbook="helm_cluster_playbook.yml"
+        end
         end
     end
 end

@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 ENV["VAGRANT_DEFAULT_PROVIDER"] = "libvirt"
-file_to_disk = './tmp/large_disk.vdi'
+disk = './tmp/large_disk.vdi'
 
 Vagrant.configure("2") do |config|
 
@@ -13,6 +13,40 @@ Vagrant.configure("2") do |config|
         libvirt.uri = "qemu:///system"
     end
 
+    # Configure Contrail Command node
+    config.vm.define "ccmd" do |vm1|
+        system("if [ #{ARGV[0]} = 'up' ]; then
+            ssh-keygen -f '/root/.ssh/known_hosts' -R 192.168.10.80
+            fi")
+        vm1.vm.box = "centos/7"
+        vm1.vm.hostname="b2s43-vm10"
+        vm1.vm.provider :libvirt do |domain|
+            domain.storage :file, :size => '20G'
+            domain.memory = 65536
+            domain.machine_virtual_size = 80
+            domain.boot 'network'
+            domain.boot 'hd'
+            domain.cpus = 4
+        end
+        # Shared folders relative to the root (where Vagrantfile is found)
+        config.vm.synced_folder "../centos7-shared-folder/", "/shared-folder", nfs:true, nfs_export: true, type: "nfs"
+        vm1.vm.network  :private_network,
+                        :ip => "192.168.10.80",
+                        :libvirt__netmask => "255.255.255.0",
+                        :libvirt__network_name => "ctldatanetwork",
+                        # :libvirt__forward_mode => "veryisolated",
+                        :libvirt__dhcp_enabled => false,
+                        :mac => "52:54:00:00:10:ea"
+        vm1.vm.network  :public_network,
+                        :bridge => "publicbr",
+#                        :mode => "bridge",
+#                        :type => "bridge",
+#                        :auto_config => true,
+#                        :ip => "10.84.22.7#{i}",
+                        :dev => "eno1",
+                        :mac => "52:54:a1:b2:01:ea"
+        vm1.vm.provision "shell", path: "scripts/command.sh"
+    end
 
     # Configure Centos target hosts
     (1..9).each do |i|
@@ -21,7 +55,7 @@ Vagrant.configure("2") do |config|
                 ssh-keygen -f '/root/.ssh/known_hosts' -R 192.168.10.7#{i}
                 fi")
             vm1.vm.box = "centos/7"
-            vm1.vm.hostname="centos#{i}"
+            vm1.vm.hostname="b2s43-vm#{i}"
             vm1.vm.provider :libvirt do |domain|
                 domain.storage :file, :size => '20G'
                 domain.memory = 65536
@@ -29,6 +63,7 @@ Vagrant.configure("2") do |config|
                 domain.boot 'network'
                 domain.boot 'hd'
                 domain.cpus = 4
+                domain.storage :file, :size => '30G', :device => 'vdb'
             end
             # Shared folders relative to the root (where Vagrantfile is found)
             config.vm.synced_folder "../centos7-shared-folder/", "/shared-folder", nfs:true, nfs_export: true, type: "nfs"
@@ -45,7 +80,7 @@ Vagrant.configure("2") do |config|
 #                            :type => "bridge",
 #                            :auto_config => true,
 #                            :ip => "10.84.22.7#{i}",
-                            :dev => "em1",
+                            :dev => "eno1",
                             :mac => "52:54:a1:b2:01:e#{i}"
             vm1.vm.provision "shell", path: "scripts/target-server.sh"
         end

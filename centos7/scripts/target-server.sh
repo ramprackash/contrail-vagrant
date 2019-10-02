@@ -27,11 +27,10 @@ chown -R root ~/.ssh
 sed -i '/^127.0.0.1.*$/d' /etc/hosts
 sed -i '/^::1.*$/d' /etc/hosts
 hostname=`hostname`
-echo "127.0.0.1 $hostname.sm-domain.com $hostname" >> /etc/hosts
+echo "127.0.0.1 $hostname.englab.juniper.net $hostname" >> /etc/hosts
 #echo "127.0.0.1 localhost" >> /etc/hosts
 rm -f /etc/localtime && ln -s /usr/share/zoneinfo/US/Pacific /etc/localtime
 
-#yum -y install tcpdump
 echo "waiting for routes to stabilize..."
 sleep 10
 

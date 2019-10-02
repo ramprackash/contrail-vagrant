@@ -1,0 +1,105 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: yes
+
+  handlers:
+    - name: restart sshd
+      service: name=sshd state=restarted
+    - name: restart networking
+      service: name=networking state=restarted
+
+  vars:
+    ntpserver: 10.84.5.101
+
+  tasks:
+    - name: Setup root password
+      shell: "'root:c0ntrail123' | sudo chpasswd"
+    - name: Enable root ssh login
+      shell: sed -i 's/^PermitRootLogin.*/PermitRootLogin yes/g' /etc/ssh/sshd_config && sed -i 's/^PasswordAuthentication.*/PasswordAuthentication yes/g' /etc/ssh/sshd_config && sed -i 's/^#PasswordAuthentication.*/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+      notify: restart sshd
+    - meta: flush_handlers
+    - name: Edit hostname
+      shell: sed -i '/^127.0.0.1.*$/d' /etc/hosts && sed -i '/^::1.*$/d' /etc/hosts
+    - name: Get public IP
+      shell: ip route delete default via 192.168.121.1 2>&1 >/dev/null && dhclient eth2 -r && dhclient eth2
+      ignore_errors: yes
+    - name: Generate ssh key
+      shell: ssh-keygen -b 2048 -t rsa -f /tmp/sshkey -q -N ""
+      ignore_errors: yes
+
+    - name: Install packages
+      package:
+          name: "{{ item }}"
+          state: installed
+      with_items:
+          - vim
+          - git
+          - ntpdate
+          - ntp
+    - name: stop ntp service
+      service: name=ntp state=stopped enabled=yes
+
+    - name: set ntp server
+      template:
+        src: ntp.conf.j2
+        dest: /etc/ntp.conf
+
+    - name: initial time sync
+      shell: "ntpdate {{ ntpserver }}"
+      ignore_errors: yes
+
+    - name: start ntp service
+      service: name=ntp state=started enabled=yes
+
+    - name: Cloning helm repos
+      git:
+          repo: "{{ item.key }}"
+          dest: "{{ item.value }}"
+      with_dict:
+          "https://github.com/Juniper/openstack-helm.git" : "/opt/openstack-helm"
+          "https://github.com/Juniper/openstack-helm-infra.git" : "/opt/openstack-helm-infra"
+          "https://github.com/Juniper/contrail-helm-deployer.git": "/opt/openstack-helm-depl"
+      ignore_errors: yes
+
+
+    - name: Add paths in bashrc
+      blockinfile:
+        path: /root/.bashrc
+        block: |
+            export BASE_DIR=/opt
+            export OSH_PATH=${BASE_DIR}/openstack-helm
+            export OSH_INFRA_PATH=${BASE_DIR}/openstack-helm-infra
+            export CHD_PATH=${BASE_DIR}/contrail-helm-deployer
+
+    - name: Copy helm inventory files into kube master
+      copy:
+        src: "{{ item }}"
+        dest: "/opt/openstack-helm-infra/tools/gate/devel/{{ item }}"
+      with_items:
+          - multinode-inventory.yaml
+          - multinode-vars.yaml
+
+    - name: apt-get update -y on all hosts
+      apt:
+        update_cache: yes
+        install_recommends: no
+        name:
+          - git
+
+    - name: Run 001-install-packages-opencontrail.sh on k8s-master
+      apt:
+        install_recommends: no
+        name:
+          - ca-certificates
+          - git
+          - make
+          - jq
+          - nmap
+          - curl
+          - uuid-runtime
+          - "linux-headers-{{ ansible_kernel }}"
+          - ipcalc
+      when: ansible_hostname in ["b2s43-vm1"]
+
+
